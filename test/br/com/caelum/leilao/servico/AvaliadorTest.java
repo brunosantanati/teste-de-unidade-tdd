@@ -34,4 +34,33 @@ public class AvaliadorTest {
         Assert.assertEquals(maiorEsperado, leiloeiro.getMaiorLance(), 0.0001);
         Assert.assertEquals(menorEsperado, leiloeiro.getMenorLance(), 0.0001);
     }
+    
+    @Test
+    public void deveCalcularAMedia() {
+    	Usuario joao = new Usuario("Joao");
+        Usuario jose = new Usuario("José");
+        Usuario maria = new Usuario("Maria");
+
+        Leilao leilao = new Leilao("Playstation 3 Novo");
+
+        leilao.propoe(new Lance(maria,300.0));
+        leilao.propoe(new Lance(joao,400.0));
+        leilao.propoe(new Lance(jose,500.0));
+        
+        Avaliador leiloeiro = new Avaliador();
+        leiloeiro.avalia(leilao);
+        
+        Assert.assertEquals(400.0, leiloeiro.getMedia(), 0.0001);
+    }
+    
+	@Test
+	public void testaMediaDeZeroLance() {
+
+		Leilao leilao = new Leilao("Iphone 7");
+
+		Avaliador avaliador = new Avaliador();
+		avaliador.avalia(leilao);
+
+		Assert.assertEquals(0, avaliador.getMedia(), 0.0001);
+	}
 }
