@@ -1,6 +1,7 @@
 package br.com.caelum.leilao.servico;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import br.com.caelum.leilao.dominio.Lance;
@@ -31,8 +32,8 @@ public class AvaliadorTest {
         double maiorEsperado = 400;
         double menorEsperado = 250;
 
-        Assert.assertEquals(maiorEsperado, leiloeiro.getMaiorLance(), 0.0001);
-        Assert.assertEquals(menorEsperado, leiloeiro.getMenorLance(), 0.0001);
+        assertEquals(maiorEsperado, leiloeiro.getMaiorLance(), 0.0001);
+        assertEquals(menorEsperado, leiloeiro.getMenorLance(), 0.0001);
     }
     
     @Test
@@ -50,7 +51,7 @@ public class AvaliadorTest {
         Avaliador leiloeiro = new Avaliador();
         leiloeiro.avalia(leilao);
         
-        Assert.assertEquals(400.0, leiloeiro.getMedia(), 0.0001);
+        assertEquals(400.0, leiloeiro.getMedia(), 0.0001);
     }
     
 	@Test
@@ -61,7 +62,7 @@ public class AvaliadorTest {
 		Avaliador leiloeiro = new Avaliador();
 		leiloeiro.avalia(leilao);
 
-		Assert.assertEquals(0, leiloeiro.getMedia(), 0.0001);
+		assertEquals(0, leiloeiro.getMedia(), 0.0001);
 	}
 	
 	@Test
@@ -74,7 +75,27 @@ public class AvaliadorTest {
         Avaliador leiloeiro = new Avaliador();
         leiloeiro.avalia(leilao);
         
-        Assert.assertEquals(200.0, leiloeiro.getMaiorLance(), 0.0001);
-        Assert.assertEquals(200.0, leiloeiro.getMenorLance(), 0.0001);
+        assertEquals(200.0, leiloeiro.getMaiorLance(), 0.0001);
+        assertEquals(200.0, leiloeiro.getMenorLance(), 0.0001);
 	}
+	
+	@Test
+    public void deveEntenderLeilaoComLancesEmOrdemRandomica() {
+        Usuario joao = new Usuario("Joao"); 
+        Usuario maria = new Usuario("Maria"); 
+        Leilao leilao = new Leilao("Playstation 3 Novo");
+
+        leilao.propoe(new Lance(joao,200.0));
+        leilao.propoe(new Lance(maria,450.0));
+        leilao.propoe(new Lance(joao,120.0));
+        leilao.propoe(new Lance(maria,700.0));
+        leilao.propoe(new Lance(joao,630.0));
+        leilao.propoe(new Lance(maria,230.0));
+
+        Avaliador leiloeiro = new Avaliador();
+        leiloeiro.avalia(leilao);
+
+        assertEquals(700.0, leiloeiro.getMaiorLance(), 0.0001);
+        assertEquals(120.0, leiloeiro.getMenorLance(), 0.0001);
+    }
 }
