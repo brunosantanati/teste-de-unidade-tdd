@@ -58,9 +58,23 @@ public class AvaliadorTest {
 
 		Leilao leilao = new Leilao("Iphone 7");
 
-		Avaliador avaliador = new Avaliador();
-		avaliador.avalia(leilao);
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
 
-		Assert.assertEquals(0, avaliador.getMedia(), 0.0001);
+		Assert.assertEquals(0, leiloeiro.getMedia(), 0.0001);
+	}
+	
+	@Test
+	public void deveEntenderLeilaoComApenasUmLance() {
+		Usuario joao = new Usuario("Joao"); 
+        Leilao leilao = new Leilao("Playstation 3 Novo");
+        
+        leilao.propoe(new Lance(joao, 200.0));
+        
+        Avaliador leiloeiro = new Avaliador();
+        leiloeiro.avalia(leilao);
+        
+        Assert.assertEquals(200.0, leiloeiro.getMaiorLance(), 0.0001);
+        Assert.assertEquals(200.0, leiloeiro.getMenorLance(), 0.0001);
 	}
 }
