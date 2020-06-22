@@ -164,9 +164,11 @@ public class AvaliadorTest {
         List<Lance> maiores = leiloeiro.getTresMaiores();
 
         assertThat(maiores.size(), equalTo(3));
-        assertThat(maiores.get(0).getValor(), equalTo(400.00));
-        assertThat(maiores.get(1).getValor(), equalTo(300.00));
-        assertThat(maiores.get(2).getValor(), equalTo(200.00));
+        assertThat(maiores, hasItems(
+            new Lance(maria, 400), 
+            new Lance(joao, 300),
+            new Lance(maria, 200)
+        ));
     }
 
     @Test
