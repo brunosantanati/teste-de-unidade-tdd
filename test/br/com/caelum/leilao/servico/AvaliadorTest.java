@@ -18,10 +18,16 @@ import br.com.caelum.leilao.dominio.Usuario;
 public class AvaliadorTest {
 	
 	private Avaliador leiloeiro;
+	private Usuario maria;
+    private Usuario joao;
 
     @Before
     public void setUp() {
         this.leiloeiro = new Avaliador();
+        
+        this.joao = new Usuario("João");
+        this.maria = new Usuario("Maria");
+        
         //System.out.println("inicializando teste!"); //O método anotado com Before é executado antes de cada teste da classe. 
     }
     
@@ -107,9 +113,6 @@ public class AvaliadorTest {
 	
 	@Test
     public void deveEntenderLeilaoComLancesEmOrdemRandomica() {
-		
-        Usuario joao = new Usuario("Joao"); 
-        Usuario maria = new Usuario("Maria");
         
         Leilao leilao = new CriadorDeLeilao().para("Playstation 3 Novo")
     		.lance(joao, 200.0)
@@ -128,9 +131,6 @@ public class AvaliadorTest {
 	
 	@Test
     public void deveEntenderLeilaoComLancesEmOrdemDecrescente() {
-		
-        Usuario joao = new Usuario("Joao"); 
-        Usuario maria = new Usuario("Maria");
         
         Leilao leilao = new CriadorDeLeilao().para("Playstation 3 Novo")
     		.lance(joao, 400.0)
@@ -147,8 +147,6 @@ public class AvaliadorTest {
 	
     @Test
     public void deveEncontrarOsTresMaioresLances() {
-        Usuario joao = new Usuario("João");
-        Usuario maria = new Usuario("Maria");
         
         Leilao leilao = new CriadorDeLeilao().para("Playstation 3 Novo")
     		.lance(joao, 100.0)
