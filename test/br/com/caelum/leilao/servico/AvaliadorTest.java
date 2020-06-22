@@ -5,7 +5,9 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.caelum.builder.CriadorDeLeilao;
@@ -34,6 +36,18 @@ public class AvaliadorTest {
 		 * desenvolvedores utilizam JUnit para escrever testes de integração. 
 		 * Os mesmos são discutidos no curso online de Testes de Integração).
     	 */
+    }
+    
+    @BeforeClass
+    public static void testandoBeforeClass() {
+		//Métodos anotados com @BeforeClass são executados apenas uma vez, antes de todos os métodos de teste.
+		//System.out.println("before class");
+    }
+
+    @AfterClass
+    public static void testandoAfterClass() {
+    	//O método anotado com @AfterClass, por sua vez, é executado uma vez, após a execução do último método de teste da classe.
+    	//System.out.println("after class");
     }
 
     @Test
