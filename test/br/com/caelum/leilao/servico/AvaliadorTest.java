@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +19,20 @@ public class AvaliadorTest {
     @Before
     public void setUp() {
         this.leiloeiro = new Avaliador();
-        //System.out.println("inicializando teste!"); //O método anotado com Before é executado antes de cada teste da classe. 
+        System.out.println("inicializando teste!"); //O método anotado com Before é executado antes de cada teste da classe. 
+    }
+    
+    @After
+    public void finaliza() {
+    	System.out.println("fim"); //Ao contrário do @Before, métodos anotados com @After são executados após a execução do método de teste.
+    	
+    	/*
+    	 * Utilizamos métodos @After quando nossos testes consomem recursos que precisam ser finalizados. 
+    	 * Exemplos podem ser testes que acessam banco de dados, abrem arquivos, abrem sockets, e etc.
+		 * (Apesar desses testes não serem mais considerados testes de unidade, afinal eles falam com outros sistemas, 
+		 * desenvolvedores utilizam JUnit para escrever testes de integração. 
+		 * Os mesmos são discutidos no curso online de Testes de Integração).
+    	 */
     }
 
     @Test
