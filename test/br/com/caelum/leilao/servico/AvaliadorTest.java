@@ -18,6 +18,7 @@ public class AvaliadorTest {
     @Before
     public void setUp() {
         this.leiloeiro = new Avaliador();
+        //System.out.println("inicializando teste!"); //O método anotado com Before é executado antes de cada teste da classe. 
     }
 
     @Test
