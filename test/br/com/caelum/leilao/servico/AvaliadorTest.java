@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.caelum.builder.CriadorDeLeilao;
 import br.com.caelum.leilao.dominio.Lance;
 import br.com.caelum.leilao.dominio.Leilao;
 import br.com.caelum.leilao.dominio.Usuario;
@@ -19,12 +20,12 @@ public class AvaliadorTest {
     @Before
     public void setUp() {
         this.leiloeiro = new Avaliador();
-        System.out.println("inicializando teste!"); //O método anotado com Before é executado antes de cada teste da classe. 
+        //System.out.println("inicializando teste!"); //O método anotado com Before é executado antes de cada teste da classe. 
     }
     
     @After
     public void finaliza() {
-    	System.out.println("fim"); //Ao contrário do @Before, métodos anotados com @After são executados após a execução do método de teste.
+    	//System.out.println("fim"); //Ao contrário do @Before, métodos anotados com @After são executados após a execução do método de teste.
     	
     	/*
     	 * Utilizamos métodos @After quando nossos testes consomem recursos que precisam ser finalizados. 
@@ -37,21 +38,15 @@ public class AvaliadorTest {
 
     @Test
     public void deveEntenderLancesEmOrdemCrescente() {
-        // cenario: 3 lances em ordem crescente
-        Usuario joao = new Usuario("Joao");
-        Usuario jose = new Usuario("José");
-        Usuario maria = new Usuario("Maria");
 
-        Leilao leilao = new Leilao("Playstation 3 Novo");
+        Leilao leilao = new CriadorDeLeilao().para("Playstation 3 Novo")
+    		.lance(new Usuario("João"), 250.0)
+    		.lance(new Usuario("José"), 300.0)
+    		.lance(new Usuario("Maria"), 400.0)
+    		.constroi();
 
-        leilao.propoe(new Lance(maria,250.0));
-        leilao.propoe(new Lance(joao,300.0));
-        leilao.propoe(new Lance(jose,400.0));
-
-        // executando a acao
         leiloeiro.avalia(leilao);
 
-        // comparando a saida com o esperado
         double maiorEsperado = 400;
         double menorEsperado = 250;
 
@@ -61,15 +56,12 @@ public class AvaliadorTest {
     
     @Test
     public void deveCalcularAMedia() {
-    	Usuario joao = new Usuario("Joao");
-        Usuario jose = new Usuario("José");
-        Usuario maria = new Usuario("Maria");
-
-        Leilao leilao = new Leilao("Playstation 3 Novo");
-
-        leilao.propoe(new Lance(maria,300.0));
-        leilao.propoe(new Lance(joao,400.0));
-        leilao.propoe(new Lance(jose,500.0));
+    	
+        Leilao leilao = new CriadorDeLeilao().para("Playstation 3 Novo")
+    		.lance(new Usuario("Maria"), 300.0)
+    		.lance(new Usuario("João"), 400.0)
+    		.lance(new Usuario("José"), 500.0)
+    		.constroi();
         
         leiloeiro.avalia(leilao);
         
@@ -88,10 +80,10 @@ public class AvaliadorTest {
 	
 	@Test
 	public void deveEntenderLeilaoComApenasUmLance() {
-		Usuario joao = new Usuario("Joao"); 
-        Leilao leilao = new Leilao("Playstation 3 Novo");
         
-        leilao.propoe(new Lance(joao, 200.0));
+        Leilao leilao = new CriadorDeLeilao().para("Playstation 3 Novo")
+    		.lance(new Usuario("João"), 200.0)
+    		.constroi();
         
         leiloeiro.avalia(leilao);
         
@@ -101,16 +93,18 @@ public class AvaliadorTest {
 	
 	@Test
     public void deveEntenderLeilaoComLancesEmOrdemRandomica() {
+		
         Usuario joao = new Usuario("Joao"); 
-        Usuario maria = new Usuario("Maria"); 
-        Leilao leilao = new Leilao("Playstation 3 Novo");
-
-        leilao.propoe(new Lance(joao,200.0));
-        leilao.propoe(new Lance(maria,450.0));
-        leilao.propoe(new Lance(joao,120.0));
-        leilao.propoe(new Lance(maria,700.0));
-        leilao.propoe(new Lance(joao,630.0));
-        leilao.propoe(new Lance(maria,230.0));
+        Usuario maria = new Usuario("Maria");
+        
+        Leilao leilao = new CriadorDeLeilao().para("Playstation 3 Novo")
+    		.lance(joao, 200.0)
+    		.lance(maria, 450.0)
+    		.lance(joao, 120.0)
+    		.lance(maria, 700.0)
+    		.lance(joao, 630.0)
+    		.lance(maria, 230.0)
+    		.constroi();
 
         leiloeiro.avalia(leilao);
 
@@ -120,14 +114,16 @@ public class AvaliadorTest {
 	
 	@Test
     public void deveEntenderLeilaoComLancesEmOrdemDecrescente() {
+		
         Usuario joao = new Usuario("Joao"); 
-        Usuario maria = new Usuario("Maria"); 
-        Leilao leilao = new Leilao("Playstation 3 Novo");
-
-        leilao.propoe(new Lance(joao,400.0));
-        leilao.propoe(new Lance(maria,300.0));
-        leilao.propoe(new Lance(joao,200.0));
-        leilao.propoe(new Lance(maria,100.0));
+        Usuario maria = new Usuario("Maria");
+        
+        Leilao leilao = new CriadorDeLeilao().para("Playstation 3 Novo")
+    		.lance(joao, 400.0)
+    		.lance(maria, 300.0)
+    		.lance(joao, 200.0)
+    		.lance(maria, 100.0)
+    		.constroi();
 
         leiloeiro.avalia(leilao);
 
@@ -139,12 +135,13 @@ public class AvaliadorTest {
     public void deveEncontrarOsTresMaioresLances() {
         Usuario joao = new Usuario("João");
         Usuario maria = new Usuario("Maria");
-        Leilao leilao = new Leilao("Playstation 3 Novo");
-
-        leilao.propoe(new Lance(joao, 100.0));
-        leilao.propoe(new Lance(maria, 200.0));
-        leilao.propoe(new Lance(joao, 300.0));
-        leilao.propoe(new Lance(maria, 400.0));
+        
+        Leilao leilao = new CriadorDeLeilao().para("Playstation 3 Novo")
+    		.lance(joao, 100.0)
+    		.lance(maria, 200.0)
+    		.lance(joao, 300.0)
+    		.lance(maria, 400.0)
+    		.constroi();
 
         leiloeiro.avalia(leilao);
 
@@ -158,12 +155,11 @@ public class AvaliadorTest {
 
     @Test
     public void deveDevolverTodosLancesCasoNaoHajaNoMinimo3() {
-        Usuario joao = new Usuario("João");
-        Usuario maria = new Usuario("Maria");
-        Leilao leilao = new Leilao("Playstation 3 Novo");
-
-        leilao.propoe(new Lance(joao, 100.0));
-        leilao.propoe(new Lance(maria, 200.0));
+        
+        Leilao leilao = new CriadorDeLeilao().para("Playstation 3 Novo")
+    		.lance(new Usuario("João"), 100.0)
+    		.lance(new Usuario("Maria"), 200.0)
+    		.constroi();
 
         leiloeiro.avalia(leilao);
 
