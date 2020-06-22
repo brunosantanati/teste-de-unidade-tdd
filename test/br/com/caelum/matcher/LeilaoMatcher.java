@@ -7,6 +7,8 @@ import org.hamcrest.TypeSafeMatcher;
 import br.com.caelum.leilao.dominio.Lance;
 import br.com.caelum.leilao.dominio.Leilao;
 
+//Link sobre custom matchers: http://jmock.org/custom-matchers.html
+
 public class LeilaoMatcher extends TypeSafeMatcher<Leilao> {
 
     private final Lance lance;
