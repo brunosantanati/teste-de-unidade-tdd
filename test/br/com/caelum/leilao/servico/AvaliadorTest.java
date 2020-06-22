@@ -82,15 +82,15 @@ public class AvaliadorTest {
         assertEquals(400.0, leiloeiro.getMedia(), 0.0001);
     }
     
-	@Test
-	public void testaMediaDeZeroLance() {
-
-		Leilao leilao = new Leilao("Iphone 7");
-
-		leiloeiro.avalia(leilao);
-
-		assertEquals(0, leiloeiro.getMedia(), 0.0001);
-	}
+//	@Test
+//	public void testaMediaDeZeroLance() {
+//
+//		Leilao leilao = new Leilao("Iphone 7");
+//
+//		leiloeiro.avalia(leilao);
+//
+//		assertEquals(0, leiloeiro.getMedia(), 0.0001);
+//	}
 	
 	@Test
 	public void deveEntenderLeilaoComApenasUmLance() {
@@ -184,14 +184,23 @@ public class AvaliadorTest {
         assertEquals(100, maiores.get(1).getValor(), 0.00001);
     }
 
-    @Test
-    public void deveDevolverListaVaziaCasoNaoHajaLances() {
-        Leilao leilao = new Leilao("Playstation 3 Novo");
+//    @Test
+//    public void deveDevolverListaVaziaCasoNaoHajaLances() {
+//        Leilao leilao = new Leilao("Playstation 3 Novo");
+//
+//        leiloeiro.avalia(leilao);
+//
+//        List<Lance> maiores = leiloeiro.getTresMaiores();
+//
+//        assertEquals(0, maiores.size());
+//    }
+    
+    @Test(expected=RuntimeException.class)
+    public void naoDeveAvaliarLeiloesSemNenhumLanceDado() {
+        Leilao leilao = new CriadorDeLeilao()
+            .para("Playstation 3 Novo")
+            .constroi();
 
         leiloeiro.avalia(leilao);
-
-        List<Lance> maiores = leiloeiro.getTresMaiores();
-
-        assertEquals(0, maiores.size());
     }
 }
