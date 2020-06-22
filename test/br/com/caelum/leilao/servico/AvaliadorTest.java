@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.leilao.dominio.Lance;
@@ -11,6 +12,13 @@ import br.com.caelum.leilao.dominio.Leilao;
 import br.com.caelum.leilao.dominio.Usuario;
 
 public class AvaliadorTest {
+	
+	private Avaliador leiloeiro;
+
+    @Before
+    public void setUp() {
+        this.leiloeiro = new Avaliador();
+    }
 
     @Test
     public void deveEntenderLancesEmOrdemCrescente() {
@@ -26,7 +34,6 @@ public class AvaliadorTest {
         leilao.propoe(new Lance(jose,400.0));
 
         // executando a acao
-        Avaliador leiloeiro = new Avaliador();
         leiloeiro.avalia(leilao);
 
         // comparando a saida com o esperado
@@ -49,7 +56,6 @@ public class AvaliadorTest {
         leilao.propoe(new Lance(joao,400.0));
         leilao.propoe(new Lance(jose,500.0));
         
-        Avaliador leiloeiro = new Avaliador();
         leiloeiro.avalia(leilao);
         
         assertEquals(400.0, leiloeiro.getMedia(), 0.0001);
@@ -60,7 +66,6 @@ public class AvaliadorTest {
 
 		Leilao leilao = new Leilao("Iphone 7");
 
-		Avaliador leiloeiro = new Avaliador();
 		leiloeiro.avalia(leilao);
 
 		assertEquals(0, leiloeiro.getMedia(), 0.0001);
@@ -73,7 +78,6 @@ public class AvaliadorTest {
         
         leilao.propoe(new Lance(joao, 200.0));
         
-        Avaliador leiloeiro = new Avaliador();
         leiloeiro.avalia(leilao);
         
         assertEquals(200.0, leiloeiro.getMaiorLance(), 0.0001);
@@ -93,7 +97,6 @@ public class AvaliadorTest {
         leilao.propoe(new Lance(joao,630.0));
         leilao.propoe(new Lance(maria,230.0));
 
-        Avaliador leiloeiro = new Avaliador();
         leiloeiro.avalia(leilao);
 
         assertEquals(700.0, leiloeiro.getMaiorLance(), 0.0001);
@@ -111,7 +114,6 @@ public class AvaliadorTest {
         leilao.propoe(new Lance(joao,200.0));
         leilao.propoe(new Lance(maria,100.0));
 
-        Avaliador leiloeiro = new Avaliador();
         leiloeiro.avalia(leilao);
 
         assertEquals(400.0, leiloeiro.getMaiorLance(), 0.0001);
@@ -129,7 +131,6 @@ public class AvaliadorTest {
         leilao.propoe(new Lance(joao, 300.0));
         leilao.propoe(new Lance(maria, 400.0));
 
-        Avaliador leiloeiro = new Avaliador();
         leiloeiro.avalia(leilao);
 
         List<Lance> maiores = leiloeiro.getTresMaiores();
@@ -149,7 +150,6 @@ public class AvaliadorTest {
         leilao.propoe(new Lance(joao, 100.0));
         leilao.propoe(new Lance(maria, 200.0));
 
-        Avaliador leiloeiro = new Avaliador();
         leiloeiro.avalia(leilao);
 
         List<Lance> maiores = leiloeiro.getTresMaiores();
@@ -163,7 +163,6 @@ public class AvaliadorTest {
     public void deveDevolverListaVaziaCasoNaoHajaLances() {
         Leilao leilao = new Leilao("Playstation 3 Novo");
 
-        Avaliador leiloeiro = new Avaliador();
         leiloeiro.avalia(leilao);
 
         List<Lance> maiores = leiloeiro.getTresMaiores();
